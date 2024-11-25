@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 public class Tilemapgenorator : MonoBehaviour
 {
@@ -11,7 +14,8 @@ public class Tilemapgenorator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        string premade = LoadPremadeLevel();
+        ConvertMapToTilemap(premade);
     }
 
     // Converts the generated map string into a Unity Tilemap
@@ -57,8 +61,29 @@ public class Tilemapgenorator : MonoBehaviour
 
     }
 
-    void LoadPremadeLevel()
+    string LoadPremadeLevel()
     {
+        string Map1 = Application.streamingAssetsPath + "/MapHolder/" + "/Maps/" + "Map1" + ".txt";
 
+        if (System.IO.File.Exists(Map1))
+        {
+            StringBuilder map1 = new StringBuilder();
+            string[] lines = System.IO.File.ReadAllLines(Map1);
+
+            foreach (string line in lines)
+            {
+                if(!string.IsNullOrEmpty(line))
+                {
+                    map1.Append(line);
+                }
+            }
+
+            return map1.ToString();
+        }
+        else
+        {
+            Debug.LogError("File not found at: " + Map1);
+            return string.Empty;
+        }
     }
 }
