@@ -6175,7 +6175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilemap: {fileID: 326640476}
   wallTile: {fileID: 11400000, guid: f162a17ddb6ee7046aa33ac32e76d1e2, type: 2}
-  doorTile: {fileID: 11400000, guid: cb369da6ca86442498037836c4e2d4ce, type: 2}
+  doorTile: {fileID: 11400000, guid: ee3a04de572adfe4c8b0c61f25f8d17f, type: 2}
   chestTile: {fileID: 11400000, guid: e4bd1074288273c4a892fa013bf268c3, type: 2}
   floorTile: {fileID: 11400000, guid: d131e4ea5a4e5cd4482bf29e7d76b471, type: 2}
   plantTile: {fileID: 11400000, guid: 715c7432ba2f17f46bc5948f6efbae28, type: 2}
