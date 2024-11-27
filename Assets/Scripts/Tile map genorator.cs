@@ -12,10 +12,13 @@ public class Tilemapgenorator : MonoBehaviour
     public Tile wallTile, doorTile, chestTile, floorTile, plantTile; // Tile assets for different map elements
 
     // Start is called before the first frame update
-    void Start()
+    void Update()
     {
-        string premade = LoadPremadeLevel();
-        ConvertMapToTilemap(premade);
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            string premade = LoadPremadeLevel();
+            ConvertMapToTilemap(premade);
+        }
     }
 
     // Converts the generated map string into a Unity Tilemap
@@ -71,26 +74,30 @@ public class Tilemapgenorator : MonoBehaviour
 
     string LoadPremadeLevel()
     {
-        string Map1 = Application.streamingAssetsPath + "/MapHolder/" + "/Maps/" + "Map1" + ".txt";
+        int thismap = Random.Range(1, 3); // Generates 1 or 2
+        string mapFileName = $"Map{thismap}.txt";
+        string mapFilePath = $"{Application.streamingAssetsPath}/MapHolder/Maps/{mapFileName}";
 
-        if (System.IO.File.Exists(Map1))
+        Debug.Log($"Attempting to load map from: {mapFilePath}");
+
+        if (System.IO.File.Exists(mapFilePath))
         {
-            StringBuilder map1 = new StringBuilder();
-            string[] lines = System.IO.File.ReadAllLines(Map1);
+            StringBuilder mapContent = new StringBuilder();
+            string[] lines = System.IO.File.ReadAllLines(mapFilePath);
 
             foreach (string line in lines)
             {
-                if(!string.IsNullOrEmpty(line))
+                if (!string.IsNullOrEmpty(line))
                 {
-                    map1.Append(line);
+                    mapContent.AppendLine(line);
                 }
             }
 
-            return map1.ToString();
+            return mapContent.ToString();
         }
         else
         {
-            Debug.LogError("File not found at: " + Map1);
+            Debug.LogError($"File not found at: {mapFilePath}");
             return string.Empty;
         }
     }
