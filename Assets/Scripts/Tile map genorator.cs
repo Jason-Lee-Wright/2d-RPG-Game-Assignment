@@ -61,6 +61,14 @@ public class Tilemapgenorator : MonoBehaviour
 
     }
 
+    public bool IsTilePassable(Vector3Int position)
+    {
+        TileBase tile = tilemap.GetTile(position);
+
+        // Check if the tile at the given position is impassable
+        return tile != wallTile && tile != doorTile && tile != chestTile && tile != null;
+    }
+
     string LoadPremadeLevel()
     {
         string Map1 = Application.streamingAssetsPath + "/MapHolder/" + "/Maps/" + "Map1" + ".txt";
