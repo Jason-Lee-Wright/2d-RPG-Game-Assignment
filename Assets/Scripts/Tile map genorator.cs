@@ -22,7 +22,7 @@ public class Tilemapgenorator : MonoBehaviour
     }
 
     // Converts the generated map string into a Unity Tilemap
-    void ConvertMapToTilemap(string mapData)
+    public void ConvertMapToTilemap(string mapData)
     {
         tilemap.ClearAllTiles(); // Clear any existing tiles
 
@@ -64,6 +64,12 @@ public class Tilemapgenorator : MonoBehaviour
 
     }
 
+    public bool IsDoorTile(Vector3Int position)
+    {
+        TileBase tile = tilemap.GetTile(position);
+        return tile == doorTile;
+    }
+
     public bool IsTilePassable(Vector3Int position)
     {
         TileBase tile = tilemap.GetTile(position);
@@ -72,33 +78,33 @@ public class Tilemapgenorator : MonoBehaviour
         return tile != wallTile && tile != doorTile && tile != chestTile && tile != null;
     }
 
-    string LoadPremadeLevel()
-    {
-        int thismap = Random.Range(1, 3); // Generates 1 or 2
-        string mapFileName = $"Map{thismap}.txt";
-        string mapFilePath = $"{Application.streamingAssetsPath}/MapHolder/Maps/{mapFileName}";
+    public string LoadPremadeLevel()
+           {
+                int thismap = Random.Range(1, 3); // Generates 1 or 2
+                string mapFileName = $"Map{thismap}.txt";
+                string mapFilePath = $"{Application.streamingAssetsPath}/MapHolder/Maps/{mapFileName}";
 
-        Debug.Log($"Attempting to load map from: {mapFilePath}");
+                Debug.Log($"Attempting to load map from: {mapFilePath}");
 
-        if (System.IO.File.Exists(mapFilePath))
-        {
-            StringBuilder mapContent = new StringBuilder();
-            string[] lines = System.IO.File.ReadAllLines(mapFilePath);
-
-            foreach (string line in lines)
-            {
-                if (!string.IsNullOrEmpty(line))
+                if (System.IO.File.Exists(mapFilePath))
                 {
-                    mapContent.AppendLine(line);
-                }
-            }
+                    StringBuilder mapContent = new StringBuilder();
+                    string[] lines = System.IO.File.ReadAllLines(mapFilePath);
 
-            return mapContent.ToString();
-        }
-        else
-        {
-            Debug.LogError($"File not found at: {mapFilePath}");
-            return string.Empty;
-        }
-    }
+                    foreach (string line in lines)
+                    {
+                        if (!string.IsNullOrEmpty(line))
+                        {
+                            mapContent.AppendLine(line);
+                        }
+                    }
+
+                    return mapContent.ToString();
+                }
+                else
+                {
+                    Debug.LogError($"File not found at: {mapFilePath}");
+                    return string.Empty;
+                }
+           }
 }

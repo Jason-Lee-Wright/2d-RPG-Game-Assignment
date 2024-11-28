@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 
 public class Playermovement : MonoBehaviour
@@ -79,6 +80,12 @@ public class Playermovement : MonoBehaviour
             targetPosition = map.tilemap.CellToWorld(targetGridPosition) + new Vector3(tileSize / 2, tileSize / 2, 0); // Offset to center on tile
             isMoving = true;
             return true; // Move was successful
+        }
+
+        if (map.IsDoorTile(targetGridPosition))
+        {
+            string mapData = map.LoadPremadeLevel();
+            map.ConvertMapToTilemap(mapData);
         }
 
         return false; // Move was not possible
