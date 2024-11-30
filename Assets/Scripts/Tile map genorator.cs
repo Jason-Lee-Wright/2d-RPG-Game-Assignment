@@ -11,6 +11,8 @@ public class Tilemapgenorator : MonoBehaviour
     public Tilemap tilemap;
     public Tile wallTile, doorTile, chestTile, floorTile, plantTile; // Tile assets for different map elements
 
+    private int lastmap = 0;
+
     // Start is called before the first frame update
     void Update()
     {
@@ -79,32 +81,40 @@ public class Tilemapgenorator : MonoBehaviour
     }
 
     public string LoadPremadeLevel()
-           {
-                int thismap = Random.Range(1, 3); // Generates 1 or 2
-                string mapFileName = $"Map{thismap}.txt";
-                string mapFilePath = $"{Application.streamingAssetsPath}/MapHolder/Maps/{mapFileName}";
+    {
+        int thismap = Random.Range(1, 5); // Generates a random number 1 - 4
 
-                Debug.Log($"Attempting to load map from: {mapFilePath}");
+        while (thismap == lastmap)
+        {
+            thismap = Random.Range(1, 5);
+        }
 
-                if (System.IO.File.Exists(mapFilePath))
+        lastmap = thismap;
+
+        string mapFileName = $"Map{thismap}.txt";
+        string mapFilePath = $"{Application.streamingAssetsPath}/MapHolder/Maps/{mapFileName}";
+
+        Debug.Log($"Attempting to load map from: {mapFilePath}");
+
+        if (System.IO.File.Exists(mapFilePath))
+        {
+            StringBuilder mapContent = new StringBuilder();
+            string[] lines = System.IO.File.ReadAllLines(mapFilePath);
+
+            foreach (string line in lines)
+            {
+                if (!string.IsNullOrEmpty(line))
                 {
-                    StringBuilder mapContent = new StringBuilder();
-                    string[] lines = System.IO.File.ReadAllLines(mapFilePath);
-
-                    foreach (string line in lines)
-                    {
-                        if (!string.IsNullOrEmpty(line))
-                        {
-                            mapContent.AppendLine(line);
-                        }
-                    }
-
-                    return mapContent.ToString();
+                    mapContent.AppendLine(line);
                 }
-                else
-                {
-                    Debug.LogError($"File not found at: {mapFilePath}");
-                    return string.Empty;
-                }
-           }
+            }
+
+            return mapContent.ToString();
+        }
+        else
+        {
+            Debug.LogError($"File not found at: {mapFilePath}");
+            return string.Empty;
+        }
+    }
 }
