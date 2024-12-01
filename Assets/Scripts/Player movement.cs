@@ -12,17 +12,19 @@ public class Playermovement : MonoBehaviour
     private bool isMoving = false;
 
     private Tilemapgenorator map;
+    private TurnHandler Turnswap;
 
     void Start()
     {
         map = FindObjectOfType<Tilemapgenorator>(); // Find the TestTilemap script
+        Turnswap = FindObjectOfType<TurnHandler>(); // Find EnemyMovent script
         targetPosition = transform.position;    // Set initial target position
     }
 
     void Update()
     {
         // If already moving, don't accept new input
-        if (isMoving)
+        if (!Turnswap.IsPlayerTurn() || isMoving)
         {
             // Smoothly move to the target position
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
@@ -32,6 +34,8 @@ public class Playermovement : MonoBehaviour
             {
                 transform.position = targetPosition;
                 isMoving = false;
+
+                Turnswap.PlayerFinishedTurn();
             }
             return;
         }
