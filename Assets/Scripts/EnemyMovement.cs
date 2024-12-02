@@ -50,20 +50,23 @@ public class EnemyMovement : MonoBehaviour
 
     void MoveTowardsPlayer()
     {
-        // Get the grid positions of the enemy and the player
-        Vector3Int enemyGridPosition = map.tilemap.WorldToCell(transform.position);
-        Vector3Int playerGridPosition = map.tilemap.WorldToCell(player.transform.position);
-
-        // Check if the enemy is adjacent to the player
-        if (IsAdjacentToPlayer(enemyGridPosition, playerGridPosition))
+        for (int i = 0; i < 1; i++)
         {
-            AttackPlayer();
-            return; // Don't move if adjacent
-        }
+            // Get the grid positions of the enemy and the player
+            Vector3Int enemyGridPosition = map.tilemap.WorldToCell(transform.position);
+            Vector3Int playerGridPosition = map.tilemap.WorldToCell(player.transform.position);
 
-        // Move closer to the player
-        Vector3Int direction = GetStepTowardsTarget(enemyGridPosition, playerGridPosition);
-        TryMove(direction);
+            // Check if the enemy is adjacent to the player
+            if (IsAdjacentToPlayer(enemyGridPosition, playerGridPosition))
+            {
+                AttackPlayer();
+                return; // Don't move if adjacent
+            }
+
+            // Move closer to the player
+            Vector3Int direction = GetStepTowardsTarget(enemyGridPosition, playerGridPosition);
+            TryMove(direction);
+        }
     }
 
     bool IsAdjacentToPlayer(Vector3Int enemyPosition, Vector3Int playerPosition)
