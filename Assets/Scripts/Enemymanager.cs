@@ -35,7 +35,7 @@ public class Enemymanager : MonoBehaviour
 
     public void DeadE()
     {
-        if (healthSystem.EHealth >= 0) // this is the first area where enemy health should be reset
+        if (healthSystem.EHealth <= 0) // this is the first area where enemy health should be reset
         {
             Enemy.transform.position = OffScreenSpawn; 
         }

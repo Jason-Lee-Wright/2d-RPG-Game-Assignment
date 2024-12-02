@@ -89,6 +89,8 @@ public class Playermovement : MonoBehaviour
 
             healthSystem.TakeDamage(2, "enemy");
 
+            Turnswap.PlayerFinishedTurn();
+
             hashit = true;
         }
     }
@@ -106,6 +108,8 @@ public class Playermovement : MonoBehaviour
         {
             hashit = false;
             AttackEnemy();
+
+            return false;
         }
 
         // Check if the target tile is passable
