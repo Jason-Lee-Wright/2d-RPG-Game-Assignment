@@ -5,11 +5,12 @@ public class EnemyMovement : MonoBehaviour
     public float tileSize = 0.08f; // Size of each tile
     public float moveSpeed = 1f; // Speed of movement between tiles
     private Vector3 targetPosition;
-    private bool isMoving = false;
 
     private GameObject player; // Reference to the player
     private Tilemapgenorator map;
     private PlayerHealth PlayerHealth;
+    private bool isMoving = false;
+    private bool hadAttacked = false;
 
     void Start()
     {
@@ -40,12 +41,18 @@ public class EnemyMovement : MonoBehaviour
             MoveTowardsPlayer();
         }
     }
+
     void AttackPlayer()
     {
-        Debug.Log("Enemy attacks the player!");
+        if (!hadAttacked)
+        {
+            Debug.Log("Enemy attacks the player!");
 
 
-        PlayerHealth.TakeDamage(1);
+            PlayerHealth.TakeDamage(1);
+
+            hadAttacked = true;
+        }
     }
 
     void MoveTowardsPlayer()
@@ -66,6 +73,8 @@ public class EnemyMovement : MonoBehaviour
             // Move closer to the player
             Vector3Int direction = GetStepTowardsTarget(enemyGridPosition, playerGridPosition);
             TryMove(direction);
+
+            hadAttacked = false;
         }
     }
 
