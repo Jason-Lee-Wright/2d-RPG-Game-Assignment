@@ -7,17 +7,22 @@ public class Playermovement : MonoBehaviour
 {
     public float tileSize = 0.08f; // Size of each tile
     public float moveSpeed = 1f; // Speed of movement between tiles
+
     private Vector3 targetPosition;
     private Vector3Int lastMove;
     private bool isMoving = false;
+    private GameObject enemy;
 
     private Tilemapgenorator map;
     private TurnHandler Turnswap;
+    private HealthSystem healthSystem;
 
     void Start()
     {
+        enemy = GameObject.FindGameObjectWithTag("Enemy");
         map = FindObjectOfType<Tilemapgenorator>(); // Find the TestTilemap script
         Turnswap = FindObjectOfType<TurnHandler>(); // Find EnemyMovent script
+        healthSystem = FindObjectOfType<HealthSystem>();
         targetPosition = transform.position;    // Set initial target position
     }
 
@@ -72,11 +77,27 @@ public class Playermovement : MonoBehaviour
         }
     }
 
+    void AttackEnemy()
+    {
+        Debug.Log("Player attacks the enemy!");
+
+
+        healthSystem.TakeDamage(2, "enemy");
+    }
+
     bool TryMove(Vector3Int direction)
     {
         // Calculate the new tile position
         Vector3Int gridPosition = map.tilemap.WorldToCell(transform.position);
         Vector3Int targetGridPosition = gridPosition + direction;
+
+        Vector3Int playerGridPosition = map.tilemap.WorldToCell(transform.position);
+        Vector3Int enemyGridPosition = map.tilemap.WorldToCell(enemy.transform.position);
+
+        if (IsAdjacentToEnemy(enemyGridPosition, playerGridPosition))
+        {
+            AttackEnemy();
+        }
 
         // Check if the target tile is passable
         if (map.IsTilePassable(targetGridPosition))
@@ -93,5 +114,15 @@ public class Playermovement : MonoBehaviour
         }
 
         return false; // Move was not possible
+    }
+
+    bool IsAdjacentToEnemy(Vector3Int enemyPosition, Vector3Int playerPosition)
+    {
+        // Calculate the difference between the enemy and player positions
+        int distanceX = Mathf.Abs(playerPosition.x - enemyPosition.x);
+        int distanceY = Mathf.Abs(playerPosition.y - enemyPosition.y);
+
+        // Return true if the player is 1 tile away in any direction
+        return (distanceX == 1 && distanceY == 0) || (distanceX == 0 && distanceY == 1);
     }
 }

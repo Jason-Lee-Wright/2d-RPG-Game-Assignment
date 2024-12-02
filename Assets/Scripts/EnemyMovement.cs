@@ -4,19 +4,19 @@ public class EnemyMovement : MonoBehaviour
 {
     public float tileSize = 0.08f; // Size of each tile
     public float moveSpeed = 1f; // Speed of movement between tiles
-    private Vector3 targetPosition;
 
     private GameObject player; // Reference to the player
     private Tilemapgenorator map;
-    private PlayerHealth PlayerHealth;
+    private HealthSystem HealthSystem;
     private bool isMoving = false;
     private bool hadAttacked = false;
+    private Vector3 targetPosition;
 
     void Start()
     {
         map = FindObjectOfType<Tilemapgenorator>(); // Find the Tilemap generator script
         player = GameObject.FindGameObjectWithTag("Player"); // Find the player object by tag
-        PlayerHealth = GameObject.FindObjectOfType<PlayerHealth>();
+        HealthSystem = GameObject.FindObjectOfType<HealthSystem>();
         targetPosition = transform.position;       // Set initial target position
         tileSize = map.tilemap.cellSize.x;
     }
@@ -49,7 +49,7 @@ public class EnemyMovement : MonoBehaviour
             Debug.Log("Enemy attacks the player!");
 
 
-            PlayerHealth.TakeDamage(1);
+            HealthSystem.TakeDamage(1, "player");
 
             hadAttacked = true;
         }
