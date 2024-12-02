@@ -14,13 +14,10 @@ public class Tilemapgenorator : MonoBehaviour
     private int lastmap = 0;
 
     // Start is called before the first frame update
-    void Update()
+    void Start()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
             string premade = LoadPremadeLevel();
             ConvertMapToTilemap(premade);
-        }
     }
 
     // Converts the generated map string into a Unity Tilemap

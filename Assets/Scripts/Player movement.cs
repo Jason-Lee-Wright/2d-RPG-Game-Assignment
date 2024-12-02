@@ -12,10 +12,12 @@ public class Playermovement : MonoBehaviour
     private Vector3Int lastMove;
     private bool isMoving = false;
     private GameObject enemy;
+    private bool hashit = false;
 
     private Tilemapgenorator map;
     private TurnHandler Turnswap;
     private HealthSystem healthSystem;
+    private Enemymanager enemymanager;
 
     void Start()
     {
@@ -23,6 +25,7 @@ public class Playermovement : MonoBehaviour
         map = FindObjectOfType<Tilemapgenorator>(); // Find the TestTilemap script
         Turnswap = FindObjectOfType<TurnHandler>(); // Find EnemyMovent script
         healthSystem = FindObjectOfType<HealthSystem>();
+        enemymanager = FindObjectOfType<Enemymanager>();
         targetPosition = transform.position;    // Set initial target position
     }
 
@@ -79,10 +82,15 @@ public class Playermovement : MonoBehaviour
 
     void AttackEnemy()
     {
-        Debug.Log("Player attacks the enemy!");
+        if (!hashit)
+        {
+            Debug.Log("Player attacks the enemy!");
 
 
-        healthSystem.TakeDamage(2, "enemy");
+            healthSystem.TakeDamage(2, "enemy");
+
+            hashit = true;
+        }
     }
 
     bool TryMove(Vector3Int direction)
@@ -96,6 +104,7 @@ public class Playermovement : MonoBehaviour
 
         if (IsAdjacentToEnemy(enemyGridPosition, playerGridPosition))
         {
+            hashit = false;
             AttackEnemy();
         }
 
@@ -111,6 +120,8 @@ public class Playermovement : MonoBehaviour
         {
             string mapData = map.LoadPremadeLevel();
             map.ConvertMapToTilemap(mapData);
+
+            enemymanager.Spawn();
         }
 
         return false; // Move was not possible

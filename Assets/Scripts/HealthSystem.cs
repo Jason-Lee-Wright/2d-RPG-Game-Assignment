@@ -7,6 +7,13 @@ public class HealthSystem : MonoBehaviour
     public int health, EHealth = 10;
     public GameObject HealthBar, EHealthBar;
 
+    private Enemymanager enemymanager;
+
+    private void Start()
+    {
+        enemymanager = GetComponent<Enemymanager>();
+    }
+
     public void TakeDamage(int Damage, string tag)
     {
         if (tag == "player")
@@ -23,6 +30,8 @@ public class HealthSystem : MonoBehaviour
 
             EHealth = Mathf.Clamp(EHealth, 0, 10);
             EHealthBar.transform.localScale = new Vector3((float)EHealth / 10, 1.0f, 1.0f);
+
+            enemymanager.DeadE();
         }
     }
 }
