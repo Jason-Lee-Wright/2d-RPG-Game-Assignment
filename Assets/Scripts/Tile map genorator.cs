@@ -81,7 +81,7 @@ public class Tilemapgenorator : MonoBehaviour
     {
         int thismap = Random.Range(1, 5); // Generates a random number 1 - 4
 
-        while (thismap == lastmap)
+        while (thismap == lastmap) // prevents the same map twice
         {
             thismap = Random.Range(1, 5);
         }
