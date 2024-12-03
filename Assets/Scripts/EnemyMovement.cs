@@ -33,8 +33,6 @@ public class EnemyMovement : MonoBehaviour
             {
                 transform.position = targetPosition;
 
-                Debug.Log("enemy moved" + transform.position);
-
                 isMoving = false;
             }
         }
@@ -42,7 +40,6 @@ public class EnemyMovement : MonoBehaviour
         {
             // Move towards the player when not already moving
             MoveTowardsPlayer();
-            Debug.Log("enemy start move");
         }
     }
 
@@ -50,9 +47,6 @@ public class EnemyMovement : MonoBehaviour
     {
         if (!hadAttacked)
         {
-            Debug.Log("Enemy attacks the player!");
-
-
             HealthSystem.TakeDamage(1, "player");
 
             hadAttacked = true;
@@ -72,7 +66,6 @@ public class EnemyMovement : MonoBehaviour
             {
                 AttackPlayer();
                 hadAttacked = false;
-                Debug.Log("enemy start attack");
                 return; // Don't move if adjacent
 
             }
@@ -80,7 +73,6 @@ public class EnemyMovement : MonoBehaviour
             // Move closer to the player
             Vector3Int direction = GetStepTowardsTarget(enemyGridPosition, playerGridPosition);
             TryMove(direction);
-            Debug.Log("enemy do move");
         }
     }
 
@@ -105,8 +97,6 @@ public class EnemyMovement : MonoBehaviour
         {
             targetPosition = map.tilemap.CellToWorld(targetGridPosition) + new Vector3(tileSize / 2, tileSize / 2, 0); // Offset to center on tile
             isMoving = true;
-
-            Debug.Log("enemy Moving");
 
             return true; // Move was successful
         }

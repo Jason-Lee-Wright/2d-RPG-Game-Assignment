@@ -48,12 +48,8 @@ public class Playermovement : MonoBehaviour
 
                     moved_ = true;
 
-                    if (!hashit)
-                    {
-                        Turnswap.PlayerFinishedTurn();
-                        Debug.Log("end player turn if no hit was made");
-                    }
-
+                    
+                    Turnswap.PlayerFinishedTurn();
                 }
             }
             return;
@@ -95,14 +91,9 @@ public class Playermovement : MonoBehaviour
     {
         if (!hashit)
         {
-            Debug.Log("Player attacks the enemy!");
-
-
             healthSystem.TakeDamage(2, "enemy");
 
             Turnswap.PlayerFinishedTurn();
-
-            Debug.Log("end player turn if a hit was made");
 
             hashit = true;
         }
@@ -117,7 +108,6 @@ public class Playermovement : MonoBehaviour
         Vector3Int playerGridPosition = map.tilemap.WorldToCell(transform.position);
         Vector3Int enemyGridPosition = map.tilemap.WorldToCell(enemy.transform.position);
 
-        moved_ = false;
 
         if (IsAdjacentToEnemy(enemyGridPosition, playerGridPosition))
         {
@@ -128,8 +118,10 @@ public class Playermovement : MonoBehaviour
         }
 
         // Check if the target tile is passable
-        if (map.IsTilePassable(targetGridPosition))
+        else if (map.IsTilePassable(targetGridPosition))
         {
+            moved_ = false;
+
             targetPosition = map.tilemap.CellToWorld(targetGridPosition) + new Vector3(tileSize / 2, tileSize / 2, 0); // Offset to center on tile
             isMoving = true;
             return true; // Move was successful
