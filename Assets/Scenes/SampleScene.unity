@@ -6924,7 +6924,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileSize: 0.08
-  moveSpeed: 1
+  moveSpeed: 100
 --- !u!1 &1546178254
 GameObject:
   m_ObjectHideFlags: 0
