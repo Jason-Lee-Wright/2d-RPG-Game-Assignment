@@ -13,11 +13,15 @@ public class Tilemapgenorator : MonoBehaviour
 
     private int lastmap = 0;
 
+    private TurnHandler TurnHandler;
+
     // Start is called before the first frame update
     void Start()
     {
-            string premade = LoadPremadeLevel();
-            ConvertMapToTilemap(premade);
+        string premade = LoadPremadeLevel();
+        ConvertMapToTilemap(premade);
+
+        TurnHandler = GetComponent<TurnHandler>();
     }
 
     // Converts the generated map string into a Unity Tilemap

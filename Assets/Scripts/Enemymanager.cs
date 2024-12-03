@@ -29,6 +29,7 @@ public class Enemymanager : MonoBehaviour
     public void Spawn()
     {
         healthSystem.EHealth = 10; // just in case the health was not rest the first time
+        healthSystem.EHealthBar.transform.localScale = new Vector3(1, 1, 1);
 
         Enemy.transform.position = EnemySpawn;
     }
@@ -37,6 +38,7 @@ public class Enemymanager : MonoBehaviour
     {
         if (healthSystem.EHealth <= 0) // this is the first area where enemy health should be reset
         {
+            healthSystem.EHealth = 10;
             Enemy.transform.position = OffScreenSpawn; 
         }
     }

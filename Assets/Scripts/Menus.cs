@@ -5,6 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class Menus : MonoBehaviour
 {
+    public GameObject menu;
+
+    private void Start()
+    {
+        menu.SetActive(false);
+    }
+
     public void Play()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -23,5 +30,19 @@ public class Menus : MonoBehaviour
     public void MainMenu()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
+
+    public void Update()
+    {
+
+        if (menu != null && Input.GetKeyDown(KeyCode.Escape))
+        {
+            menu.SetActive(false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            menu.SetActive(true);
+        }
     }
 }

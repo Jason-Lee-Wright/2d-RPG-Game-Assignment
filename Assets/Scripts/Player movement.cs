@@ -51,6 +51,7 @@ public class Playermovement : MonoBehaviour
                     if (!hashit)
                     {
                         Turnswap.PlayerFinishedTurn();
+                        Debug.Log("end player turn if no hit was made");
                     }
 
                 }
@@ -100,6 +101,8 @@ public class Playermovement : MonoBehaviour
             healthSystem.TakeDamage(2, "enemy");
 
             Turnswap.PlayerFinishedTurn();
+
+            Debug.Log("end player turn if a hit was made");
 
             hashit = true;
         }

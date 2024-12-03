@@ -31,7 +31,10 @@ public class HealthSystem : MonoBehaviour
             EHealth = Mathf.Clamp(EHealth, 0, 10);
             EHealthBar.transform.localScale = new Vector3((float)EHealth / 10, 1.0f, 1.0f);
 
-            enemymanager.DeadE();
+            if (EHealth <= 0)
+            {
+                enemymanager.DeadE();
+            }
         }
     }
 
