@@ -67,14 +67,14 @@ public class EnemyMovement : MonoBehaviour
             if (IsAdjacentToPlayer(enemyGridPosition, playerGridPosition))
             {
                 AttackPlayer();
+                hadAttacked = false;
                 return; // Don't move if adjacent
+
             }
 
             // Move closer to the player
             Vector3Int direction = GetStepTowardsTarget(enemyGridPosition, playerGridPosition);
             TryMove(direction);
-
-            hadAttacked = false;
         }
     }
 

@@ -69,6 +69,12 @@ public class Tilemapgenorator : MonoBehaviour
         return tile == doorTile;
     }
 
+    public bool IsChestTile(Vector3Int position)
+    {
+        TileBase tile = tilemap.GetTile(position);
+        return tile == chestTile;
+    }
+
     public bool IsTilePassable(Vector3Int position)
     {
         TileBase tile = tilemap.GetTile(position);

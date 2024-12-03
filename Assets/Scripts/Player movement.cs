@@ -13,6 +13,7 @@ public class Playermovement : MonoBehaviour
     private bool isMoving = false;
     private GameObject enemy;
     private bool hashit = false;
+    private bool moved_ = false;
 
     private Tilemapgenorator map;
     private TurnHandler Turnswap;
@@ -40,10 +41,19 @@ public class Playermovement : MonoBehaviour
             // Stop moving if we reached the target position
             if (Vector3.Distance(transform.position, targetPosition) < 0.01f)
             {
-                transform.position = targetPosition;
-                isMoving = false;
+                if (!moved_)
+                {
+                    transform.position = targetPosition;
+                    isMoving = false;
 
-                Turnswap.PlayerFinishedTurn();
+                    moved_ = true;
+
+                    if (!hashit)
+                    {
+                        Turnswap.PlayerFinishedTurn();
+                    }
+
+                }
             }
             return;
         }
@@ -104,6 +114,8 @@ public class Playermovement : MonoBehaviour
         Vector3Int playerGridPosition = map.tilemap.WorldToCell(transform.position);
         Vector3Int enemyGridPosition = map.tilemap.WorldToCell(enemy.transform.position);
 
+        moved_ = false;
+
         if (IsAdjacentToEnemy(enemyGridPosition, playerGridPosition))
         {
             hashit = false;
@@ -126,6 +138,11 @@ public class Playermovement : MonoBehaviour
             map.ConvertMapToTilemap(mapData);
 
             enemymanager.Spawn();
+        }
+
+        if (map.IsChestTile(targetGridPosition))
+        {
+            healthSystem.HealPlayer(2);
         }
 
         return false; // Move was not possible

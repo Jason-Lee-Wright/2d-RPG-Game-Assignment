@@ -34,4 +34,12 @@ public class HealthSystem : MonoBehaviour
             enemymanager.DeadE();
         }
     }
+
+    public void HealPlayer(int heal)
+    {
+        health += heal;
+
+        health = Mathf.Clamp(health, 0, 10);
+        HealthBar.transform.localScale = new Vector3((float)health / 10, 1.0f, 1.0f);
+    }
 }
