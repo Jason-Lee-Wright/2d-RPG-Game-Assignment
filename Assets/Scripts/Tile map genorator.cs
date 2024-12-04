@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
@@ -9,7 +10,7 @@ using UnityEngine.UI;
 public class Tilemapgenorator : MonoBehaviour
 {
     public Tilemap tilemap;
-    public Tile wallTile, doorTile, chestTile, floorTile, plantTile; // Tile assets for different map elements
+    public Tile wallTile, doorTile, chestTile, openChestTile, floorTile, plantTile; // Tile assets for different map elements
 
     private int lastmap = 0;
 
@@ -84,7 +85,7 @@ public class Tilemapgenorator : MonoBehaviour
         TileBase tile = tilemap.GetTile(position);
 
         // Check if the tile at the given position is impassable
-        return tile != wallTile && tile != doorTile && tile != chestTile && tile != null;
+        return tile != wallTile && tile != doorTile && tile != chestTile && tile != openChestTile && tile != null;
     }
 
     public string LoadPremadeLevel()

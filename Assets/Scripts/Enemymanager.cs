@@ -11,6 +11,7 @@ public class Enemymanager : MonoBehaviour
 
     private HealthSystem healthSystem;
     private Tilemapgenorator tilemapgenorator;
+    private WinCounter WinCounter;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +19,7 @@ public class Enemymanager : MonoBehaviour
         OffScreenSpawn = Enemy.transform.position;
         healthSystem = GetComponent<HealthSystem>();
         tilemapgenorator = GetComponent<Tilemapgenorator>();
+        WinCounter = GetComponent<WinCounter>();
     }
 
     // keeping incase i need later
@@ -39,7 +41,8 @@ public class Enemymanager : MonoBehaviour
         if (healthSystem.EHealth <= 0) // this is the first area where enemy health should be reset
         {
             healthSystem.EHealth = 10;
-            Enemy.transform.position = OffScreenSpawn; 
+            Enemy.transform.position = OffScreenSpawn;
+            WinCounter.AddCount();
         }
     }
 }

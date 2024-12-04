@@ -137,7 +137,8 @@ public class Playermovement : MonoBehaviour
 
         if (map.IsChestTile(targetGridPosition))
         {
-            healthSystem.HealPlayer(2);
+            healthSystem.HealPlayer(1);
+            map.tilemap.SetTile(targetGridPosition, map.openChestTile);
         }
 
         return false; // Move was not possible

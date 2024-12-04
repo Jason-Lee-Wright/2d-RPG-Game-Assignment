@@ -6,17 +6,39 @@ using UnityEngine;
 public class WinCounter : MonoBehaviour
 {
     public TextMeshProUGUI WinCount;
+    public GameObject WinScreen;
 
-// make it so that when you kill an enemy it puts a fraction so you dont need to guess
+    private int Count = 0;
+
+    private Menus Menus;
 
     void Start()
     {
-        
+        WinScreen.SetActive(false);
+        WinCount.text = $"Enemies Defeated \n {Count} / 4";
+
+        Menus = GetComponent<Menus>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void AddCount()
     {
-        
+        Count++;
+        WinCount.text = $"Enemies Defeated \n {Count} / 4";
+
+        if (Count > 4)
+        {
+            Count = 4;
+        }
+
+        Invoke("CheckCount", 2.0f);
+    }
+
+    void CheckCount()
+    {
+        if (Count == 4)
+        {
+            WinScreen.SetActive(true);
+            Menus.Pause();
+        }
     }
 }
